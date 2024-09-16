@@ -11,7 +11,7 @@ pipeline {
    environment {
         NEXUS_VERSION = "nexus3"
         NEXUS_PROTOCOL = "http"
-        NEXUS_URL = "http://ec2-54-88-43-55.compute-1.amazonaws.com:8080/"
+        NEXUS_URL = "ec2-54-88-43-55.compute-1.amazonaws.com:8080/"
         NEXUS_REPOSITORY = "geo"
         NEXUS_CREDENTIAL_ID = "nexus-userID"
     }
