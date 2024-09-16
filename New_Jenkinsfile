@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+
+    stages {
+        // Stage 1: Clean
+        stage('Clean') {
+            steps {
+                echo 'Cleaning the project...'
+                sh 'mvn clean'
+            }
+        }
+
+        // Stage 2: Install
+        stage('Install') {
+            steps {
+                echo 'Installing dependencies...'
+                sh 'mvn install'
+            }
+        }
+
+        // Stage 3: Compile
+        stage('Compile') {
+            steps {
+                echo 'Compiling the project...'
+                sh 'mvn compile'
+            }
+        }
+
+        // Stage 4: Test
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                sh 'mvn test'
+            }
+        }
+
+        // Stage 5: Package
+        stage('Package') {
+            steps {
+                echo 'Packaging the project...'
+                sh 'mvn package'
+            }
+        }
+    }
+
+    post {
+        // If the pipeline succeeds
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+
+        // If the pipeline fails
+        failure {
+            echo 'Pipeline failed. Check the logs for more details.'
+        }
+    }
+}
