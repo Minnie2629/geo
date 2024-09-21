@@ -1,19 +1,18 @@
 
 pipeline{
    agent any 
-   tools{
-    maven 'M2_HOME'
+   environment {
+    BRANCH_NAME = 'main'
+    GIT_URL = 'https://github.com/Minnie2629/geo.git'
+    GITHUB_CREDENTIALS = 'github-credentials'  
+    
    }
    stages{
     
-    stage("maven"){
+    stage('checkout'){
         steps{ 
-        sh 'mvn clean '
-        sh 'mvn validate'
-        sh 'mvn compile' 
-        sh 'mvn install' 
-        sh 'mvn test'
-        sh 'mvn package'
+        git branch: "${BRANCH_NAME}", credentialsId: "${GITHUB_CREDENTIALS}",\
+         url: "${GIT_URL}"
         }
     }
    } 
