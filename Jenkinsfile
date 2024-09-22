@@ -7,17 +7,23 @@ pipeline{
    }
 
    environment {
+    AWS_REGION ='us-east-1'
     BRANCH_NAME = 'main'
     SCANNER_HOME = tool 'sonar-tools'
     GIT_URL = 'https://github.com/Minnie2629/geo.git'
     QG_CONDITION = false
     GITHUB_CREDENTIALS = 'github-credentials' 
-       SONAQUBE_CRED = 'Sonar-cred'
-       SONAQUBE_INSTALLATION = 'Sonar'
-       APP_NAME = 'geoapp' 
-       JFROG_CRED = 'jfrog-cred'
-       ARTIFACTPATH = 'target/*.jar'
-       ARTIFACTORY_URL = 'http://ec2-54-198-48-171.compute-1.amazonaws.com:8081/artifactory'
+    SONAQUBE_CRED = 'Sonar-cred'
+    SONAQUBE_INSTALLATION = 'Sonar'
+    APP_NAME = 'geoapp' 
+    JFROG_CRED = 'jfrog-cred'
+    ARTIFACTPATH = 'target/*.jar'
+    ARTIFACTORY_URL = 'http://ec2-54-198-48-171.compute-1.amazonaws.com:8081/artifactory'
+    REPO = 'devops'
+    ARTIFACTTARGETPATH = 'release_${BUILD_ID}.jar'
+    DOCKER_REPO ='137766331670.dkr.ecr.us-east-1.amazonaws.com/devops_repository'
+    REPO_URL ='137766331670.dkr.ecr.us-east-1.amazonaws.com/'
+ 
     
    }
    stages{
@@ -64,9 +70,7 @@ pipeline{
     stage('package app'){
             steps{
                sh 'mvn package'
-               sh 'ls'
-               sh 'pwd'
-               sh 'ls target'
+              
             }
         }
         stage('Upload Jar to Jfrog'){
@@ -86,9 +90,8 @@ pipeline{
                         """
             }
         }
-    }
-
-}
+            }
+        }
 
     stage('Docker image Build'){
         steps{
@@ -118,5 +121,6 @@ pipeline{
         }
     }
     }
+   }
     
 
