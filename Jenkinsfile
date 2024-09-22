@@ -42,6 +42,7 @@ pipeline{
           sh 'mvn compile'
         }
     }
+   }
     /*
      stage('Sonarqube Scan'){
             steps{
