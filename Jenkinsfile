@@ -8,8 +8,13 @@ pipeline{
 
    environment {
     BRANCH_NAME = 'main'
+    SCANNER_HOME = tool 'sonar-tools'
     GIT_URL = 'https://github.com/Minnie2629/geo.git'
-    GITHUB_CREDENTIALS = 'github-credentials'  
+    QG_CONDITION = false
+    GITHUB_CREDENTIALS = 'github-credentials' 
+       SONAQUBE_CRED = 'Sonar-cred'
+       SONAQUBE_INSTALLATION = 'Sonar'
+       APP_NAME = 'geoapp' 
     
    }
    stages{
@@ -27,5 +32,42 @@ pipeline{
           sh 'mvn compile'
         }
     }
+    /*
+     stage('Sonarqube Scan'){
+            steps{
+                withSonarQubeEnv(credentialsId: "${SONAQUBE_CRED}", \
+                installationName: "${SONAQUBE_INSTALLATION}" ) {
+              sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=${APP_NAME} -Dsonar.projectKey=${APP_NAME} \
+                   -Dsonar.java.binaries=. '''
+}
+            }
+        }
+     stage('Quality Gate Check'){
+            steps{
+              script{
+                 waitForQualityGate abortPipeline: "${QG_CONDITION}", credentialsId: "${SONAQUBE_CRED}" 
+              }
+            }
+        }
+    stage('Trivy Scan'){
+            steps{
+                 sh "trivy fs --format table -o maven_dependency.html ."
+            }
+        }
    } 
 }
+*/
+
+    stage('package app'){
+            steps{
+               sh 'mvn package'
+               sh 'ls'
+               sh 'pwd'
+               sh 'ls target'
+            }
+        }
+    stage('package app'){
+            steps{
+               sh 'mvn package'
+            }
+        }
