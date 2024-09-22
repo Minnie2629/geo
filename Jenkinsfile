@@ -90,6 +90,10 @@ pipeline{
                                  -T ${ARTIFACTPATH} \
                                  ${ARTIFACTORY_URL}/${REPO}/${ARTIFACTTARGETPATH}
                         """
+                    }
+                 }
+            }
+        }
 
 
     stage('Docker image Build'){
