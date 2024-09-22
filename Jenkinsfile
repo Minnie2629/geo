@@ -26,6 +26,7 @@ pipeline{
  
     
    }
+}
    stages{
     
     stage('checkout'){
@@ -88,10 +89,7 @@ pipeline{
                                  -T ${ARTIFACTPATH} \
                                  ${ARTIFACTORY_URL}/${REPO}/${ARTIFACTTARGETPATH}
                         """
-            }
-        }
-            }
-        }
+
 
     stage('Docker image Build'){
         steps{
@@ -121,6 +119,6 @@ pipeline{
         }
     }
     }
-   }
+   
     
 
