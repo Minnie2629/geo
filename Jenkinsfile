@@ -101,13 +101,15 @@ pipeline {
         stage('Push Image to Registry') {
             steps {
                 script {
-                    sh "aws ecr-public get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${REPO_URL}"
-                    sh """
-                        docker push ${DOCKER_REPO}:latest
-                        docker push ${DOCKER_REPO}:${BUILD_ID}
-                    """
+                   // Use AWS CLI to log in to ECR
+            def ecrPassword = sh(script: "aws ecr get-login-password --region ${AWS_REGION}", returnStdout: true).trim()
+            sh "echo ${ecrPassword} | docker login --username AWS --password-stdin ${REPO_URL}"
+            sh "docker push ${DOCKER_REPO}:latest"
+            sh "docker push ${DOCKER_REPO}:${BUILD_ID}"
                 }
             }
         }
     } // Closing the stages block
 } // Closing the pipeline block
+
+
