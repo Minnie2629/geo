@@ -12,7 +12,7 @@ pipeline {
         GIT_URL = 'https://github.com/Minnie2629/geo.git'
         QG_CONDITION = false
         GITHUB_CREDENTIALS = 'github-credentials' 
-        SONAQUBE_CRED = 'Sonar-cred'
+        SONAQUBE_CRED = 'Sonar-credentials'
         SONAQUBE_INSTALLATION = 'Sonar'
         APP_NAME = 'geoapp' 
         JFROG_CRED = 'jfrog-cred'
